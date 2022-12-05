@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "django"
+name = "djan-go"
 version = "0.1.0"
 description = ""
 authors = ["lot8229 <lot8229@kakao.com>"]
