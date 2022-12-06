@@ -1,6 +1,3 @@
-provider "aws" {
-  region = var.region
-}
 locals {
   vpc_name = "msa_kube"
   cidr = "10.0.0.0./16"
