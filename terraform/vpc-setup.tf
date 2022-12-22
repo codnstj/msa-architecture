@@ -37,3 +37,48 @@ resource "aws_route" "public_to_igw" {
   destination_cidr_block = "0.0.0.0/0"
   gateway_id = aws_internet_gateway.igw.id
 }
+
+resource "aws_subnet" "public" {
+  count = length(local.public_subnets)
+  vpc_id = aws_vpc.msa_kube.id
+  availability_zone = local.azs[count.index]
+  map_public_ip_on_launch = true
+  tags = {
+    Name = "${local.vpc_name}-public-${count.index + 1}",
+    "kubernetes.io/cluster/${local.cluster_name}" = "shared",
+    "kubernetes.op/role/elb" = "1"
+  }
+}
+
+resource "aws_route_table_association" "public" {
+  count = length(local.public_subnets)
+
+  subnet_id = aws_subnet.public[count.index].id
+  route_table_id = aws_route_table.public.id
+}
+resource "aws_eip" "ngw" {
+  vpc = true
+  tags = { Name = "${local.vpc_name}-ngw"}
+}
+resource "aws_nat_gateway" "ngw" {
+  allocation_id = aws_vpc.msa_kube.id
+  tags = {Name = "${local.vpc_name}-private"}
+}
+
+resource "aws_subnet" "private" {
+  count = length(local.private_subnets)
+
+  vpc_id = aws_vpc.msa_kube.id
+  cidr_block = local.private_subnets[count.index]
+  availability_zone = local.azs[count.index]
+  tags = {
+    "Name" = "${local.vpc_name}-private-${count.index + 1}",
+    "kubernetes.io/cluster/${local.cluster_name}" = "shared"
+    "kubernetes.io/role/internal-elb" = "1"
+  }
+}
+resource "aws_route_table_association" "private" {
+  count = length(local.private_subnets)
+  subnet_id = aws_subnet.private[count.index].id
+  route_table_id = aws_route_table.private.id
+}
