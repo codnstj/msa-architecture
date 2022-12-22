@@ -1,0 +1,4 @@
+asgiref @ file:///Users/seochaeun/Library/Caches/pypoetry/artifacts/55/e1/e7/2c7688b8915a4ae2f176a110f56be81c20d7a70b4e95f2f08289a92ad1/asgiref-3.6.0-py3-none-any.whl
+Django @ file:///Users/seochaeun/Library/Caches/pypoetry/artifacts/3b/b5/5b/0702e274430fff2336594cb6973353e35983eb12155009ce0ba4ea5e52/Django-4.1.4-py3-none-any.whl
+gunicorn @ file:///Users/seochaeun/Library/Caches/pypoetry/artifacts/9f/68/9f/f1166be9473b4fe2cc59c98fac616db1f94b18662b9055d1ac940374e3/gunicorn-20.1.0-py3-none-any.whl
+sqlparse==0.4.3
