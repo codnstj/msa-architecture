@@ -49,7 +49,6 @@ resource "aws_subnet" "public" {
     "kubernetes.op/role/elb" = "1"
   }
 }
-
 resource "aws_route_table_association" "public" {
   count = length(local.public_subnets)
 
@@ -62,6 +61,7 @@ resource "aws_eip" "ngw" {
 }
 resource "aws_nat_gateway" "ngw" {
   allocation_id = aws_vpc.msa_kube.id
+  subnet_id = aws_subnet.public[0].id
   tags = {Name = "${local.vpc_name}-private"}
 }
 
