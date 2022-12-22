@@ -24,11 +24,16 @@ resource "aws_security_group" "security_group" {
   vpc_id = aws_vpc.msa_kube.id
   tags = { Name = "${local.vpc_name}-igw" }
 }
-resource "aws_internet_gateway" "name" {
+resource "aws_internet_gateway" "igw" {
   vpc_id = aws_vpc.msa_kube.id
   tags = { Name = "${local.vpc_name}-igw" }
 }
 resource "aws_route_table" "public" {
   vpc_id = aws_vpc.msa_kube.id
   tags   = { Name = "${local.vpc_name}-public" }
+}
+resource "aws_route" "public_to_igw" {
+  route_table_id = aws_route_table.public.id
+  destination_cidr_block = "0.0.0.0/0"
+  gateway_id = aws_internet_gateway.igw.id
 }
