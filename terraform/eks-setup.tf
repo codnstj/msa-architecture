@@ -24,7 +24,6 @@ resource "aws_iam_role_policy_attachment" "cluster_AmazonEKSVPCResourceControlle
 resource "aws_eks_cluster" "eks_cluster" {
   name = local.cluster_name
   role_arn = aws_iam_role.cluster.arn
-#   for_each = toset(aws_subnets.private)
   vpc_config {
     subnet_ids = aws_subnet.private[*].id
   }
