@@ -47,10 +47,9 @@ resource "aws_iam_role" "pod_execution" {
     }]
   })
 }
-resource "aws_iam_policy_attachment" "pod_execution_AmazonEKSFargatePodExecutionRolePolicy" {
+resource "aws_iam_role_policy_attachment" "pod_execution_AmazonEKSFargatePodExecutionRolePolicy" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSFargatePodExecutionRolePolicy"
-  name = "pod_execution_AmazonEKSFargatePodExecutionRolePolicy"
-  roles = aws_iam_role.pod_execution.name
+  role = aws_iam_role.pod_execution.name
 }
 resource "aws_eks_fargate_profile" "default" {
     cluster_name = aws_eks_cluster.eks_cluster.name
