@@ -13,11 +13,11 @@ resource "aws_iam_role" "cluster" {
   })
 }
 resource "aws_iam_role_policy_attachment" "cluster_AmazonEKSClusterPolicy" {
-  policy_arn = "arm:aws:iam::aws:policy/AmazonEkSClusterPolicy"
+  policy_arn = "arn:aws:iam::aws:policy/AmazonEkSClusterPolicy"
   role = aws_iam_role.cluster.name
 }
 resource "aws_iam_role_policy_attachment" "cluster_AmazonEKSVPCResourceController" {
-  policy_arn = "arm:aws:iam::aws:policy/AmazonEKSVPCResourceController"
+  policy_arn = "arn:aws:iam::aws:policy/AmazonEKSVPCResourceController"
   role = aws_iam_role.cluster.name
 }
 resource "aws_eks_cluster" "eks_cluster" {
@@ -37,13 +37,13 @@ resource "aws_iam_role" "pod_execution" {
   name = "${local.cluster_name}-eks-pod-execution-role"
 
   assume_role_policy = jsonencode({
-    Version = "2012-10-17"
+    Version = "2012-10-17",
     Statement = [{
-        Effect = "Allow",
-        Principal = {
-            Service = "eks-fargate-pods.amazonaws.com"
-        },
-        Action = "sts.AssumeRole"
+      Effect = "Allow",
+      Principal = {
+        Service = "eks-fargate-pods.amazonaws.com"
+      },
+      Action = "sts:AssumeRole"
     }]
   })
 }
