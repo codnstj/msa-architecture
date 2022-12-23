@@ -24,6 +24,8 @@ resource "aws_security_group" "security_group" {
   vpc_id = aws_vpc.msa_kube.id
   tags = { Name = "${local.vpc_name}-igw" }
 }
+
+
 resource "aws_internet_gateway" "igw" {
   vpc_id = aws_vpc.msa_kube.id
   tags = { Name = "${local.vpc_name}-igw" }
@@ -37,11 +39,11 @@ resource "aws_route" "public_to_igw" {
   destination_cidr_block = "0.0.0.0/0"
   gateway_id = aws_internet_gateway.igw.id
 }
-
 resource "aws_subnet" "public" {
   count = length(local.public_subnets)
   vpc_id = aws_vpc.msa_kube.id
   availability_zone = local.azs[count.index]
+  cidr_block = local.public_subnets[count.index]
   map_public_ip_on_launch = true
   tags = {
     Name = "${local.vpc_name}-public-${count.index + 1}",
@@ -55,6 +57,8 @@ resource "aws_route_table_association" "public" {
   subnet_id = aws_subnet.public[count.index].id
   route_table_id = aws_route_table.public.id
 }
+
+
 resource "aws_eip" "ngw" {
   vpc = true
   tags = { Name = "${local.vpc_name}-ngw"}
