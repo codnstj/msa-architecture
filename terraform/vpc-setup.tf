@@ -64,7 +64,7 @@ resource "aws_eip" "ngw" {
   tags = { Name = "${local.vpc_name}-ngw"}
 }
 resource "aws_nat_gateway" "ngw" {
-  allocation_id = aws_vpc.msa_kube.id
+  allocation_id = aws_eip.ngw.id
   subnet_id = aws_subnet.public[0].id
   tags = {Name = "${local.vpc_name}-private"}
 }
