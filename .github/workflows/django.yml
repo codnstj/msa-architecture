@@ -1,0 +1,45 @@
+name: Django CI
+
+on:
+  push:
+    paths: 
+      - "django/**"
+    branches: [ "master" ]
+
+jobs:
+  docker_build_push:
+    runs-on: ubuntu-latest
+    env:
+      working-directory: ./django
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2.6.0
+
+      - name: Set up AWS IAM
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-northeast-2
+        
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+
+      - name: Inject slug/short variables
+        id: slug-short-variables-inject
+        uses: rlespinasse/github-slug-action@v3.x
+
+      - name: set env for image tags
+        id: set-env
+        run: echo "::set-output name=full-image-path::${{ steps.login-ecr.outputs.registry }}/msa_kube:django-${GITHUB_REF_SLUG}-${GITHUB_SHA_SHORT}"
+        
+      - name: Build, tag, and push image to Amazon ECR
+        id: build-image
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          push: true
+          tags: ${{ steps.set-env.outputs.full-image-path }}
+          working-directory: ${{env.working-directory}}
