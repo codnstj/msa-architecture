@@ -7,4 +7,4 @@ RUN pip3 install flask
 WORKDIR /app
 
 CMD ["python3", "-m", "helloworld", "run", "--host=0.0.0.0"]
-EXPOSE 5000
+EXPOSE 5010
