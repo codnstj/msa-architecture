@@ -1,16 +1,16 @@
-name: Django CI
+name: Flask CI
 
 on:
   push:
     paths: 
-      - "django/**"
+      - "flask/**"
     branches: [ "master" ]
 
 jobs:
   docker_build_push:
     runs-on: ubuntu-latest
     env:
-      working-directory: ./django
+      working-directory: ./flask
 
     steps:
       - name: Checkout
@@ -33,7 +33,7 @@ jobs:
 
       - name: set env for image tags
         id: set-env
-        run: echo "::set-output name=full-image-path::${{ steps.login-ecr.outputs.registry }}/msa_kube:django-${GITHUB_REF_SLUG}-${GITHUB_SHA_SHORT}"
+        run: echo "::set-output name=full-image-path::${{ steps.login-ecr.outputs.registry }}/msa_kube:flask-${GITHUB_REF_SLUG}-${GITHUB_SHA_SHORT}"
         
       - name: Build, tag, and push image to Amazon ECR
         id: build-image
