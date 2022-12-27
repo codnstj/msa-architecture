@@ -36,9 +36,9 @@ jobs:
         run: |
           echo "::set-output name=image-name::msa_kube:django-${GITHUB_REF_SLUG}-${GITHUB_SHA_SHORT}"        
           echo "::set-output name=image-path::${{ steps.login-ecr.outputs.registry }}/msa_kube:django-${GITHUB_REF_SLUG}-${GITHUB_SHA_SHORT}"
-          
+
       - name: load secrets 
-        run : aws s3 cp s3://msa-kube/secrets.json ${{env.working-directory}}/.
+        run : aws s3 cp s3://kube-msa/secrets.json ${{env.working-directory}}/.
       - name: Build, tag, and push image to Amazon ECR
         id: build-image
         run : |
