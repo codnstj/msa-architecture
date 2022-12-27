@@ -43,6 +43,6 @@ jobs:
         id: build-image
         run : |
           cd ${{env.working-directory}}
-          docker build -t {{steps.set-env.outputs.image-name}} .
+          docker build -t ${{steps.set-env.outputs.image-name}} .
           docker tag ${{steps.set-env.outputs.image-path}}
           docker push ${{steps.set-env.outputs.image-path}}
