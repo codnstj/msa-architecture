@@ -33,13 +33,16 @@ jobs:
 
       - name: set env for image tags
         id: set-env
-        run: echo "::set-output name=full-image-path::${{ steps.login-ecr.outputs.registry }}/msa_kube:django-${GITHUB_REF_SLUG}-${GITHUB_SHA_SHORT}"
-        
+        run: |
+          echo "::set-output name=image-name::msa_kube:django-${GITHUB_REF_SLUG}-${GITHUB_SHA_SHORT}"        
+          echo "::set-output name=image-path::${{ steps.login-ecr.outputs.registry }}/msa_kube:django-${GITHUB_REF_SLUG}-${GITHUB_SHA_SHORT}"
+          
+      - name: load secrets 
+        run : aws s3 cp s3://msa-kube/secrets.json ${{env.working-directory}}/.
       - name: Build, tag, and push image to Amazon ECR
         id: build-image
-        uses: docker/build-push-action@v2
-        with:
-          context: .
-          push: true
-          tags: ${{ steps.set-env.outputs.full-image-path }}
-          working-directory: ${{env.working-directory}}
+        run : |
+          cd ${{env.working-directory}}
+          docker build -t {{steps.set-env.outputs.image-name}} .
+          docker tag ${{steps.set-env.outputs.image-path}}
+          docker push ${{steps.set-env.outputs.image-path}}
