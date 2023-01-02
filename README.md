@@ -1,10 +1,12 @@
 # msa-architecture
 msa Training cluster by python based language's server library for studying msa , ArgoCD , K8s , EFK 
-![image](kube_msa_architecture.drawio.png)
 
-### ⚠️ Please Read me
 
-main.tf
+### ⚠️ Please Read me ⚠️
+
+in main.tf ...
+
+you must change that parts of code by yours 😀 
 ```tf
 terraform {
   backend "remote" {
@@ -16,3 +18,6 @@ terraform {
   ...
  ```
  
+
+### Architecture
+![image](kube_msa_architecture.drawio.png)
