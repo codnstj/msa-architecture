@@ -6,7 +6,7 @@ msa Training cluster by python based language's server library for studying msa 
 
 in main.tf ...
 
-you must change that parts of code by yours 😀 
+You should change that part to your information 😀 
 ```tf
 terraform {
   backend "remote" {
