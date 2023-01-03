@@ -42,7 +42,7 @@ resource "aws_route" "public_to_igw" {
 resource "aws_subnet" "public" {
   count = length(local.public_subnets)
   vpc_id = aws_vpc.msa_kube.id
-  availability_zone = local.azs[count.index]
+  availability_zone = local.azs[count.index % 2]
   cidr_block = local.public_subnets[count.index]
   map_public_ip_on_launch = true
   tags = {
