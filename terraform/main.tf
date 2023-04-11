@@ -1,5 +1,12 @@
 provider "aws" {
   region = var.region
+
+  default_tags {
+    tags = {
+      "Terraform" = "True"
+      "Project" = "${var.cluster_name}-project"
+    }
+  }
 }
 
 terraform {
