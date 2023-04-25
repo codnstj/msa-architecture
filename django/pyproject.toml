@@ -8,6 +8,7 @@ authors = ["lot8229 <lot8229@kakao.com>"]
 python = "^3.10"
 Django = "^4.1.3"
 gunicorn = "^20.1.0"
+djangorestframework = "^3.14.0"
 
 [tool.poetry.dev-dependencies]
 

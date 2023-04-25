@@ -1,0 +1,22 @@
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+
+metadata:
+  name: eks-cluster 
+  region: ap-northeast-2
+
+vpc:
+  cidr: "192.168.0.0/16"
+
+nodeGroups:
+  - name: eks-cluster-ng
+    instanceType: t3a.large
+    desiredCapacity: 1
+    volumeSize: 10
+    iam: 
+      withAddonPolicies:
+        ImageBuilder: true
+        albIngress: true 
+    ssh:
+      allow: true
+      publicKeyName: cluster-ssh-key.pem

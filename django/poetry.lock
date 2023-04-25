@@ -27,6 +27,18 @@ argon2 = ["argon2-cffi (>=19.1.0)"]
 bcrypt = ["bcrypt"]
 
 [[package]]
+name = "djangorestframework"
+version = "3.14.0"
+description = "Web APIs for Django, made easy."
+category = "main"
+optional = false
+python-versions = ">=3.6"
+
+[package.dependencies]
+django = ">=3.0"
+pytz = "*"
+
+[[package]]
 name = "gunicorn"
 version = "20.1.0"
 description = "WSGI HTTP Server for UNIX"
@@ -39,6 +51,14 @@ eventlet = ["eventlet (>=0.24.1)"]
 gevent = ["gevent (>=1.4.0)"]
 setproctitle = ["setproctitle"]
 tornado = ["tornado (>=0.2)"]
+
+[[package]]
+name = "pytz"
+version = "2023.3"
+description = "World timezone definitions, modern and historical"
+category = "main"
+optional = false
+python-versions = "*"
 
 [[package]]
 name = "sqlparse"
@@ -59,11 +79,13 @@ python-versions = ">=2"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "a2d831ba660661c5e7fa128fc8b630ecac7e17c1801ac2b160e6a946fcee6f5b"
+content-hash = "117007ed96d7f34151a6fdb0588b6f2f0bd73b6cc6f39633527ef7154643cc5e"
 
 [metadata.files]
 asgiref = []
 django = []
+djangorestframework = []
 gunicorn = []
+pytz = []
 sqlparse = []
 tzdata = []

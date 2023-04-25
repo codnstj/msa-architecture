@@ -1,0 +1,25 @@
+apiVersion: install.istio.io/v1alpha1
+kind: IstioOperator
+metadata:
+  namespace: istio-system
+  name: istiocontrolplane
+spec:
+  addonComponents: #add on component
+    grafana: # 시계열 데이터 시각화
+      enabled: true
+    kiali: # 트래픽 시각화
+      enabled: true
+    prometheus: # 정보 수집
+      enabled: true
+    tracing: # 트래픽 흐름 추적가능
+      enabled: true
+  components:
+    ingressGateways: 
+    - name: istio-ingressgateway #기본게이트웨이
+      enabled: true
+  profile: default
+  values:
+    kiali:
+      dashboard:
+        auth:
+          strategy: anonymous # kiali 로그인없이 접속가능
