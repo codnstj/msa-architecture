@@ -8,10 +8,6 @@ spec:
   containers:
   - name: red-app
     image: yoonjeong/red-app:1.0
-    resources:
-      limits:
-        memory: "64Mi"
-        cpu: "250m"
     ports:
       - containerPort: 8080
     env:
@@ -27,3 +23,7 @@ spec:
       valueFrom:
         fieldRef:
           fieldPath: status.podIP
+    resources:
+      limits:
+        memory: "64Mi"
+        cpu: "250m"
