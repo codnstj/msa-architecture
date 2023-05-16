@@ -1,6 +1,7 @@
 provider "aws" {
   region = var.region
-
+  shared_config_files = ["~/.aws/credentials"]
+  profile = "saltware"
   default_tags {
     tags = {
       "Terraform" = "True"
@@ -10,12 +11,12 @@ provider "aws" {
 }
 
 terraform {
-  backend "remote" {
-    organization = "codns"
-    workspaces {
-      name = "msa_kube"
-    }
-  }
+#   backend "remote" {
+#     organization = "codns"
+#     workspaces {
+#       name = "msa_kube"
+#     }
+#   }
   required_providers {
     aws = {
       source  = "hashicorp/aws"
